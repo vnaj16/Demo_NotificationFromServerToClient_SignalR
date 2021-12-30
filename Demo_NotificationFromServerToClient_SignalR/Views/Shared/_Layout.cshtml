@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - Demo_NotificationFromServerToClient_SignalR</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/js/toastr/toastr.css" />
 </head>
 <body>
     <header>
@@ -22,7 +23,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Process">Process</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Notification">Notification</a>
                         </li>
                     </ul>
                 </div>
@@ -40,9 +44,29 @@
             &copy; 2021 - Demo_NotificationFromServerToClient_SignalR - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+    <script src="~/js/signalr/signalr.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery.unobtrusive-ajax.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/toastr/toastr.min.js"></script>
+    <script>
+
+        var connectionNotificationMessageHub = new signalR.HubConnectionBuilder()
+            .withUrl("/notificationMessageHub").build();
+
+        connectionNotificationMessageHub.start().then(function () {
+            console.log("conectado a notificationMessageHub");
+        })
+
+        connectionNotificationMessageHub.on("ReceiveMessage", function (message, duration) {
+            toastr.options = {
+                "closeButton": true,
+                 "timeOut": (duration*1000)
+            }
+            toastr.info(message)
+        })
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

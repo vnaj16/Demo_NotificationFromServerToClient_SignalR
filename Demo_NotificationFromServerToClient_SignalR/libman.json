@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "toastr.js@2.1.4",
+      "destination": "wwwroot/js/toastr"
+    },
+    {
+      "library": "jquery-ajax-unobtrusive@3.2.6",
+      "destination": "wwwroot/lib/"
+    },
+    {
+      "library": "microsoft-signalr@6.0.1",
+      "destination": "wwwroot/js/signalr"
+    }
+  ]
+}

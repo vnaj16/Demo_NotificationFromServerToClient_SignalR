@@ -1,0 +1,68 @@
+﻿@model Demo_NotificationFromServerToClient_SignalR.Models.NotificationMessage
+
+@{
+    ViewData["Title"] = "Notification";
+}
+
+<h1>Notification</h1>
+
+<h4>NotificationMessage</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Notification">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Message" class="control-label"></label>
+                <input asp-for="Message" id="inputMessage" class="form-control" />
+                <span asp-validation-for="Message" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MessageDuration" class="control-label"></label>
+                <input asp-for="MessageDuration" id="inputDuration" class="form-control" />
+                <span asp-validation-for="MessageDuration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="button" value="Create" onclick="sendNotification()" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+
+<script>
+
+        //var connection = new signalR.HubConnectionBuilder()
+        //    .withUrl("/notificationMessageHub").build();
+
+        //connection.start().then(function () {
+        //    console.log("conectado a notificationMessageHub");
+        //})
+
+        sendNotification = function () {
+            message = document.getElementById("inputMessage").value;
+            duration = parseInt(document.getElementById("inputDuration").value);
+            console.log(message + '-' + duration)
+            connectionNotificationMessageHub.invoke("SendMessage", message, duration).catch(function (err) {
+                return console.error(err.toString());
+            });
+        }
+
+        //connection.on("ReceiveMessage", function (message, duration) {
+        //    toastr.options = {
+        //        "closeButton": true,
+        //         "timeOut": (duration*1000)
+        //    }
+        //    toastr.info(message)
+        //})
+</script>
+
+}
