@@ -55,11 +55,26 @@
         var connectionNotificationMessageHub = new signalR.HubConnectionBuilder()
             .withUrl("/notificationMessageHub").build();
 
+        var connectionNotificationProcessHub = new signalR.HubConnectionBuilder()
+            .withUrl("/notificationProcessHub").build();
+
         connectionNotificationMessageHub.start().then(function () {
             console.log("conectado a notificationMessageHub");
         })
 
+        connectionNotificationProcessHub.start().then(function () {
+            console.log("conectado a notificationProcessHub");
+        })
+
         connectionNotificationMessageHub.on("ReceiveMessage", function (message, duration) {
+            toastr.options = {
+                "closeButton": true,
+                 "timeOut": (duration*1000)
+            }
+            toastr.info(message)
+        })
+
+        connectionNotificationProcessHub.on("ReceiveProcessNotification", function (message, duration) {
             toastr.options = {
                 "closeButton": true,
                  "timeOut": (duration*1000)

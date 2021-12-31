@@ -54,6 +54,7 @@ namespace Demo_NotificationFromServerToClient_SignalR
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapHub<NotificationMessageHub>("/notificationMessageHub");
+                endpoints.MapHub<NotificationProcessHub>("/notificationProcessHub");
             });
         }
     }
