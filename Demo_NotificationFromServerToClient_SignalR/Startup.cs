@@ -1,6 +1,7 @@
 using Demo_NotificationFromServerToClient_SignalR.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,17 @@ namespace Demo_NotificationFromServerToClient_SignalR
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication("Login.Cookie")
+  .AddCookie("Login.Cookie",
+      options =>
+              {
+                  options.Cookie.Name = "Login.Cookie";
+                  options.LoginPath = new PathString("/Home/Login");
+                  options.Cookie.HttpOnly = false;
+                  options.ExpireTimeSpan = TimeSpan.FromHours(12);
+                  options.SlidingExpiration = false;
+                  options.AccessDeniedPath = new PathString("/Home/Login");
+              });
             services.AddControllersWithViews();
             services.AddSignalR();
         }
@@ -46,6 +58,7 @@ namespace Demo_NotificationFromServerToClient_SignalR
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

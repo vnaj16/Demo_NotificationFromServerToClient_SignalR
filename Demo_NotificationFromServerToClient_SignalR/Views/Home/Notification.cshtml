@@ -13,6 +13,11 @@
         <form asp-action="Notification">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" id="inputUsername" class="form-control" value="All  />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Message" class="control-label"></label>
                 <input asp-for="Message" id="inputMessage" class="form-control" />
                 <span asp-validation-for="Message" class="text-danger"></span>
@@ -21,6 +26,10 @@
                 <label asp-for="MessageDuration" class="control-label"></label>
                 <input asp-for="MessageDuration" id="inputDuration" class="form-control" />
                 <span asp-validation-for="MessageDuration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label"></label>
+                <input id="inputOnlyGroup" class="form-control" />
             </div>
             <div class="form-group">
                 <input type="button" value="Create" onclick="sendNotification()" class="btn btn-primary" />
@@ -40,29 +49,31 @@
 
 <script>
 
-        //var connection = new signalR.HubConnectionBuilder()
-        //    .withUrl("/notificationMessageHub").build();
+    //var connection = new signalR.HubConnectionBuilder()
+    //    .withUrl("/notificationMessageHub").build();
 
-        //connection.start().then(function () {
-        //    console.log("conectado a notificationMessageHub");
-        //})
+    //connection.start().then(function () {
+    //    console.log("conectado a notificationMessageHub");
+    //})
 
-        sendNotification = function () {
-            message = document.getElementById("inputMessage").value;
-            duration = parseInt(document.getElementById("inputDuration").value);
-            console.log(message + '-' + duration)
-            connectionNotificationMessageHub.invoke("SendMessage", message, duration).catch(function (err) {
-                return console.error(err.toString());
-            });
-        }
+    sendNotification = function () {
+        username = document.getElementById("inputUsername").value;
+        message = document.getElementById("inputMessage").value;
+        duration = parseInt(document.getElementById("inputDuration").value);
+        onlyMyGroup = document.getElementById("inputOnlyGroup").value == 1 ? true : false;
+        console.log(message + '-' + duration)
+        connectionNotificationMessageHub.invoke("SendMessage", username, message, duration,onlyMyGroup).catch(function (err) {
+            return console.error(err.toString());
+        });
+    }
 
-        //connection.on("ReceiveMessage", function (message, duration) {
-        //    toastr.options = {
-        //        "closeButton": true,
-        //         "timeOut": (duration*1000)
-        //    }
-        //    toastr.info(message)
-        //})
+    //connection.on("ReceiveMessage", function (message, duration) {
+    //    toastr.options = {
+    //        "closeButton": true,
+    //         "timeOut": (duration*1000)
+    //    }
+    //    toastr.info(message)
+    //})
 </script>
 
 }

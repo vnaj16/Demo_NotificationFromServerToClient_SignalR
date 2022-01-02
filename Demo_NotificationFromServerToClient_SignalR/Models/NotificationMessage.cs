@@ -3,6 +3,7 @@
     public class NotificationMessage
     {
         public string Message { get; set; }
+        public string Username { get; set; }
         public int MessageDuration { get; set; }
 
     }
