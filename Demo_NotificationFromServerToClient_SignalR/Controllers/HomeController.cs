@@ -8,9 +8,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace Demo_NotificationFromServerToClient_SignalR.Controllers
 {
@@ -28,6 +27,7 @@ namespace Demo_NotificationFromServerToClient_SignalR.Controllers
         public IActionResult Index()
         {
             return View();
+
         }
 
         public IActionResult Process()
